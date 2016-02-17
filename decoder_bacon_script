@@ -1,26 +1,72 @@
-Script started on Tue 16 Feb 2016 03:27:07 PM EET
-ls: cannot access codex: No such file or directory
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m% [K[?1h=ppwd[?1l>
-/home/yanki/prj/bacon_cipher
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m% [K[?1h=ccd ..[?1l>
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m% [K[?1h=ccd bacon_cipher[1m/[0m[0m [?1l>
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m% [K[?1h=cd bacon_cipher[12D..          [10Dpwd  escript bacon3 "asdfHjjhh "[?1l>
-escript: Failed to open file: bacon3
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m% [K[?1h=escript bacon3 "asdfHjjhh "[P[12C [13D[P[12C [13D[P[12C [13D
-[J<`file' or `corrections'> completion:[A[0m[27m[24m[39m[10Cescript baco"asdfHjjhh "[K[39m[12D[P[12C [13D[P[12C [13D[P[12C [13D[P[12C [13Ds"asdfHjjhh "[12D[P[12C [13Dd"asdfHjjhh "[12De"asdfHjjhh "[12Dc"asdfHjjhh "[12Do"asdfHjjhh "[12D
-[J[J<`file' or `corrections'> completion:[A[0m[27m[24m[39m[10Cescript deco"asdfHjjhh "[K[39m[12Dd"asdfHjjhh "[12De"asdfHjjhh "[12Dr"asdfHjjhh "[12D "asdfHjjhh "[12D_ "asdfHjjhh "[13Db "asdfHjjhh "[13Da "asdfHjjhh "[13Dc "asdfHjjhh "[13Do "asdfHjjhh "[13Dn "asdfHjjhh "[13D_ "asdfHjjhh "[13Ds "asdfHjjhh "[13Dc "asdfHjjhh "[13Dr "asdfHjjhh "[13Di "asdfHjjhh "[13Dp "asdfHjjhh "[13Dt "asdfHjjhh "[13D[?1l>
-[Jhello yanki, from /home/yanki/.erlang file
-escript: Premature end of file reached
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m% [K[?1h=ppwd[?1l>
-/home/yanki/prj/bacon_cipher
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m% [K[?1h=ggit init[?1l>
-Initialized empty Git repository in /home/yanki/prj/bacon_cipher/.git/
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m([32mbacon_cipher:master[39m)% [K[?1h=ggit add README.md[?1l>
-fatal: pathspec 'README.md' did not match any files
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m([32mbacon_cipher:master[39m)% [K[?1h=ppwd[?1l>
-/home/yanki/prj/bacon_cipher
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m([32mbacon_cipher:master[39m)% [K[?1h=ee README.md[?1l>
-Waiting for Emacs...
-[1m[7m%[27m[1m[0m                                                                                                               [0m[27m[24m[J[36mmidgardr[39m([32m[31m* bacon_cipher:master[39m)% [K[?1h=
+#!/usr/bin/env escript
+%% -*- erlang -*-
+%%! decoding bacon cipher programm
+main([String]) ->
+    Key = "aaaaabbbbbabbbaabbababbaaababaab",
+    Alphabet = "abcdefghijklmnopqrstuvwxyz",
+    io:format("String = ~p~n", [String]),
+    try
+%% create proplist Key-Alphabet
+%% {[Key], litera_of_alphabet}
+%% {[97,97,97,97,97], 97}
+        KA = create_proplist(Key, Key, Alphabet, [], [], 0),
+        Out = input (String, []),
+        create_word(Out, [], 0, KA, [])
+    catch
+        T:E ->
+            io:format("Type: ~p, Exception: ~p~nStacktrace:~p~n",
+                      [T, E, erlang:get_stacktrace()]),
+            usage()
+    end;
+main(_) ->
+    usage().
 
-Script done on Wed 17 Feb 2016 12:28:08 AM EET
+usage() ->
+    io:format("usage: give me a  string!\n"),
+    halt(1).
+
+input ([], Acc) -> 
+    lists:reverse(Acc);
+input ([H|Tail], Acc) ->
+    Asd =
+        if H >= 65 andalso H =< 90 ->
+                [98|Acc];
+           H >= 97 andalso H =< 122 ->
+                [97|Acc];
+           H == 32 -> 
+                Acc;
+           true -> {error,not_a_leter}
+        end,
+    input (Tail, Asd).
+
+create_word([], Acc, _, _KA, Dec) -> 
+    Out = lists:reverse(Dec),
+%% RESULT
+    io:format("Out_word ~p~n", [Out]);
+create_word([H|Tail], Acc, 4, KA, Dec) ->
+    Word = [H|Acc],
+%% call new fun check the conformity of proplist 5 simbols of decode simbols - new simbols
+    Rev_Word = lists:reverse(Word),
+    Decod = [decoder(KA, Rev_Word, [])|Dec],
+    create_word(Tail, [], 0, KA, Decod);
+create_word([H|Tail], Acc, C, _KA, Dec) ->
+    Word = [H|Acc],
+    create_word(Tail, Word, C+1, _KA, Dec).
+
+create_proplist(_, _, [], Res, _List, _Count) -> lists:reverse(Res);
+create_proplist([H1|_TKey], [_H|TailKey], [Ha|TAlphabet], Res, List1, 4) ->
+    List2 = [H1|List1],
+    Result = [{lists:reverse(List2), Ha}|Res],
+    create_proplist(TailKey, TailKey, TAlphabet, Result, [], 0);
+create_proplist([H1|TKey], Key, Alphabet, Res, List1, Count) ->
+    List2 = [H1|List1],
+    create_proplist(TKey, Key, Alphabet, Res, List2, Count+1).
+
+decoder([], _Word, Out_sent) ->
+    Out_sent;
+decoder([{N,Head}|Tail_KA], Word, Out_sent) ->
+    if N == Word ->
+            OutLitera = Head;
+       true -> 
+            decoder(Tail_KA, Word, Out_sent)
+    end.
