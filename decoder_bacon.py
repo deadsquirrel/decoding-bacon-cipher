@@ -19,10 +19,7 @@ if __name__ = '__main__':
     for j in inp:
         if j == " ":
             continue
-        if j.islower():
-            newl.append('a')
-        else:
-            newl.append('b')
+        newl.append('a' if j.islower() else 'b')
 
     newstr = ''.join(newl)
     counter = len(newl)
