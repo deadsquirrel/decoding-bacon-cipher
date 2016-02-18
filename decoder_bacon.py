@@ -25,8 +25,7 @@ if __name__ = '__main__':
         word = newstr[0:5]
         for k, v in key_v:
             if v == word:
-                lit = k
-                s = s + lit
+                s = s + k
         newstr = newstr[5:]
         counter = counter - 5
     print s
