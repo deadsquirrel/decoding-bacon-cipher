@@ -22,9 +22,8 @@ if __name__ = '__main__':
     newstr = ''.join(newl)
     counter = len(newl)
     while counter > 0:
-        word = newstr[0:5]
         for k, v in key_v:
-            if v == word:
+            if v == newstr[0:5]:
                 s += k
         newstr = newstr[5:]
         counter = counter - 5
