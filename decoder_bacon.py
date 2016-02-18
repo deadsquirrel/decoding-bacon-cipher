@@ -11,15 +11,13 @@ ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
 
 if __name__ = '__main__':
     inp = sys.argv[1]
-    newl = []
     s = ''
     # create list of tuples with key_value_structure = key_letter_of_alphabet
     key_v = [(ALPHABET[n], KEY[n:(n + 5)]) for n in range(len(ALPHABET))]
 
-    for j in inp:
-        if j == " ":
-            continue
-        newl.append('a' if j.islower() else 'b')
+    newl = ['a' if j.islower() else 'b'
+            for j in inp
+            if j != " "]
 
     newstr = ''.join(newl)
     counter = len(newl)
