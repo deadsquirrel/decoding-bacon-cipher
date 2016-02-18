@@ -17,8 +17,7 @@ if __name__ = '__main__':
     s = ''
     # create list of tuples with key_value_structure = key_letter_of_alphabet
     for i in ALPHABET:
-        y = (i, KEY[n:(n + 5)])
-        key_v.append(y)
+        key_v.append((i, KEY[n:(n + 5)]))
         n += 1
 
     for j in inp:
