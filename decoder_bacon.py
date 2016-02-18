@@ -12,16 +12,14 @@ ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
 if __name__ = '__main__':
     inp = sys.argv[1]
     n = 0
-    k = 5
     key_v = []
     newl = []
     s = ''
     # create list of tuples with key_value_structure = key_letter_of_alphabet
     for i in ALPHABET:
-        y = (i, KEY[n:k])
+        y = (i, KEY[n:(n + 5)])
         key_v.append(y)
         n += 1
-        k += 1
 
     for j in inp:
         if j == " ":
