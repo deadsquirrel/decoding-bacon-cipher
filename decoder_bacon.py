@@ -15,9 +15,7 @@ if __name__ = '__main__':
     key_v = []
     newl = []
     s = str()
-    '''
-    create list of tuples with key_value_structure = key_letter_of_alphabet
-    '''
+    # create list of tuples with key_value_structure = key_letter_of_alphabet
     for i in alphabet:
         y = (i, key[n:k])
         key_v.append(y)
