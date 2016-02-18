@@ -4,7 +4,9 @@
 crypt message
 Bacon's cipher
 '''
+
 import sys
+
 
 KEY = 'aaaaabbbbbabbbaabbababbaaababaab'
 ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
