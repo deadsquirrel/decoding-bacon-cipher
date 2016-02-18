@@ -26,8 +26,7 @@ if __name__ = '__main__':
         if j == " ":
             continue
         else:
-            low = j.islower()
-            if low == True:
+            if j.islower():
                 newl.append('a')
             else:
                 newl.append('b')
