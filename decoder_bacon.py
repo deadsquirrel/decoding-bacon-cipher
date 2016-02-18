@@ -6,18 +6,19 @@ Bacon's cipher
 '''
 import sys
 
+KEY = 'aaaaabbbbbabbbaabbababbaaababaab'
+ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
+
 if __name__ = '__main__':
     inp = sys.argv[1]
-    key = 'aaaaabbbbbabbbaabbababbaaababaab'
-    alphabet = 'abcdefghijklmnopqrstuvwxyz'
     n = 0
     k = 5
     key_v = []
     newl = []
     s = ''
     # create list of tuples with key_value_structure = key_letter_of_alphabet
-    for i in alphabet:
-        y = (i, key[n:k])
+    for i in ALPHABET:
+        y = (i, KEY[n:k])
         key_v.append(y)
         n = n + 1
         k = k + 1
