@@ -11,7 +11,6 @@ ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
 
 if __name__ = '__main__':
     inp = sys.argv[1]
-    s = ''
     # create list of tuples with key_value_structure = key_letter_of_alphabet
     key_v = [(ALPHABET[n], KEY[n:(n + 5)]) for n in range(len(ALPHABET))]
 
@@ -21,6 +20,7 @@ if __name__ = '__main__':
 
     newstr = ''.join(newl)
     counter = len(newl)
+    s = ''
     while counter > 0:
         for k, v in key_v:
             if v == newstr[0:5]:
