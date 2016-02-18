@@ -1,6 +1,8 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
-%%! decoding bacon cipher programm
+%%!
+%% decoding bacon cipher programm
+
 main([String]) ->
     Key = "aaaaabbbbbabbbaabbababbaaababaab",
     Alphabet = "abcdefghijklmnopqrstuvwxyz",
@@ -29,18 +31,23 @@ input ([], Acc) ->
     lists:reverse(Acc);
 input ([H|Tail], Acc) ->
     Asd =
-        if H >= 65 andalso H =< 90 ->
-                [98|Acc];
-           H >= 97 andalso H =< 122 ->
-                [97|Acc];
-           H == 32 -> 
-                Acc;
-           true -> {error,not_a_leter}
+        if H > 64 andalso H < 91 ->
+                io:format("H1 ==  ~p~n", [H]),
+                Acc1 = [98|Acc],
+                io:format("Acc1 ==  ~p~n", [Acc1]), Acc1;
+           H > 96 andalso H < 123 ->
+                io:format("H2 ==  ~p~n", [H]),
+                Acc2 = [97|Acc],
+                io:format("Acc2 ==  ~p~n", [Acc2]), Acc2;
+           true -> 
+                io:format("H3 ==  ~p~n", [H]),
+                io:format("Acc3 ==  ~p~n", [Acc]),
+                Acc
         end,
     input (Tail, Asd).
-
+%%% create_word(Out, [], 0, KA, [])
 %% the creation of the output encoded text
-create_word([], Acc, _, _KA, Dec) -> 
+create_word([], _Acc, _, _KA, Dec) -> 
     Out = lists:reverse(Dec),
 %% RESULT
     io:format("Out_word ~p~n", [Out]);
@@ -48,7 +55,7 @@ create_word([H|Tail], Acc, 4, KA, Dec) ->
     Word = [H|Acc],
 %% call new fun check the conformity of proplist 5 simbols of decode simbols - new simbols
     Rev_Word = lists:reverse(Word),
-    Decod = [decoder(KA, Rev_Word, [])|Dec],
+    Decod = [decoder(KA, Rev_Word)|Dec],
     create_word(Tail, [], 0, KA, Decod);
 create_word([H|Tail], Acc, C, _KA, Dec) ->
     Word = [H|Acc],
@@ -58,7 +65,8 @@ create_word([H|Tail], Acc, C, _KA, Dec) ->
 %% {[Key], letter_of_alphabet}
 %% compliance with key fragment of the 5 signs of KEY ("a" or "b") 
 %% a letter of the alphabet
-create_proplist(_, _, [], Res, _List, _Count) -> lists:reverse(Res);
+create_proplist(_, _, [], Res, _List, _Count) ->
+    List=lists:reverse(Res);
 create_proplist([H1|_TKey], [_H|TailKey], [Ha|TAlphabet], Res, List1, 4) ->
     List2 = [H1|List1],
     Result = [{lists:reverse(List2), Ha}|Res],
@@ -68,11 +76,17 @@ create_proplist([H1|TKey], Key, Alphabet, Res, List1, Count) ->
     create_proplist(TKey, Key, Alphabet, Res, List2, Count+1).
 
 %% go through the prop-list and retrieve the appropriate symbols
-decoder([], _Word, Out_sent) ->
-    Out_sent;
-decoder([{N,Head}|Tail_KA], Word, Out_sent) ->
+%%decoder([], _Word, Out_sent) ->
+%%    Out_sent;
+decoder([{N,Head}|Tail_KA], Word) ->
     if N == Word ->
-            OutLitera = Head;
-       true -> 
-            decoder(Tail_KA, Word, Out_sent)
-    end.
+            io:format("Head: ~p~n",[Head]),
+            Head;
+%%%decoder([{_}|Tail_KA], Word) ->
+%%%    io:format("lets go ~n",[]),
+       true ->
+            decoder(Tail_KA, Word)
+    end;
+decoder(A,B) ->
+    io:format("gotyou! ~p, ~p~n", [A,B]).
+
