@@ -14,7 +14,7 @@ if __name__ = '__main__':
     k = 5
     key_v = []
     newl = []
-    s = str()
+    s = ''
     # create list of tuples with key_value_structure = key_letter_of_alphabet
     for i in alphabet:
         y = (i, key[n:k])
