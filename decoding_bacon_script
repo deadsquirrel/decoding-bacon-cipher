@@ -7,7 +7,7 @@ main([String]) ->
     io:format("String = ~p~n", [String]),
     try
 %% create proplist Key-Alphabet
-%% {[Key], litera_of_alphabet}
+%% {[Key], letter_of_alphabet}
 %% {[97,97,97,97,97], 97}
         KA = create_proplist(Key, Key, Alphabet, [], [], 0),
         Out = input (String, []),
@@ -39,6 +39,7 @@ input ([H|Tail], Acc) ->
         end,
     input (Tail, Asd).
 
+%% the creation of the output encoded text
 create_word([], Acc, _, _KA, Dec) -> 
     Out = lists:reverse(Dec),
 %% RESULT
@@ -53,6 +54,10 @@ create_word([H|Tail], Acc, C, _KA, Dec) ->
     Word = [H|Acc],
     create_word(Tail, Word, C+1, _KA, Dec).
 
+%% create proplist Key-Alphabet
+%% {[Key], letter_of_alphabet}
+%% compliance with key fragment of the 5 signs of KEY ("a" or "b") 
+%% a letter of the alphabet
 create_proplist(_, _, [], Res, _List, _Count) -> lists:reverse(Res);
 create_proplist([H1|_TKey], [_H|TailKey], [Ha|TAlphabet], Res, List1, 4) ->
     List2 = [H1|List1],
@@ -62,6 +67,7 @@ create_proplist([H1|TKey], Key, Alphabet, Res, List1, Count) ->
     List2 = [H1|List1],
     create_proplist(TKey, Key, Alphabet, Res, List2, Count+1).
 
+%% go through the prop-list and retrieve the appropriate symbols
 decoder([], _Word, Out_sent) ->
     Out_sent;
 decoder([{N,Head}|Tail_KA], Word, Out_sent) ->
