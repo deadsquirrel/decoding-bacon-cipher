@@ -20,8 +20,8 @@ if __name__ = '__main__':
     for i in ALPHABET:
         y = (i, KEY[n:k])
         key_v.append(y)
-        n = n + 1
-        k = k + 1
+        n += 1
+        k += 1
 
     for j in inp:
         if j == " ":
