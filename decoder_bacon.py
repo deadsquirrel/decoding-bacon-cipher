@@ -6,7 +6,6 @@ Bacon's cipher
 '''
 
 import argparse
-import sys
 
 
 KEY = 'aaaaabbbbbabbbaabbababbaaababaab'
