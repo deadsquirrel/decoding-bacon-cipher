@@ -6,7 +6,6 @@
 main([String]) ->
     Key = "aaaaabbbbbabbbaabbababbaaababaab",
     Alphabet = "abcdefghijklmnopqrstuvwxyz",
-    io:format("String = ~p~n", [String]),
     try
 %% create proplist Key-Alphabet
 %% {[Key], letter_of_alphabet}
@@ -32,7 +31,7 @@ input ([], Acc) ->
 input ([H|Tail], Acc) ->
     Asd =
         if H > 64 andalso H < 91 ->
-                Acc1 = [98|Acc];
+                [98|Acc];
            H > 96 andalso H < 123 ->
                 [97|Acc];
            true -> 
@@ -44,7 +43,7 @@ input ([H|Tail], Acc) ->
 create_word([], _Acc, _, _KA, Dec) -> 
     Out = lists:reverse(Dec),
 %% RESULT
-    io:format("Out_word ~p~n", [Out]);
+    io:format("Out_text ~p~n", [Out]);
 create_word([H|Tail], Acc, 4, KA, Dec) ->
     Word = [H|Acc],
 %% call new fun check the conformity of proplist 5 simbols of decode simbols - new simbols
@@ -60,7 +59,7 @@ create_word([H|Tail], Acc, C, _KA, Dec) ->
 %% compliance with key fragment of the 5 signs of KEY ("a" or "b") 
 %% a letter of the alphabet
 create_proplist(_, _, [], Res, _List, _Count) ->
-    List=lists:reverse(Res);
+    lists:reverse(Res);
 create_proplist([H1|_TKey], [_H|TailKey], [Ha|TAlphabet], Res, List1, 4) ->
     List2 = [H1|List1],
     Result = [{lists:reverse(List2), Ha}|Res],
