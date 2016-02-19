@@ -32,20 +32,14 @@ input ([], Acc) ->
 input ([H|Tail], Acc) ->
     Asd =
         if H > 64 andalso H < 91 ->
-                io:format("H1 ==  ~p~n", [H]),
-                Acc1 = [98|Acc],
-                io:format("Acc1 ==  ~p~n", [Acc1]), Acc1;
+                Acc1 = [98|Acc];
            H > 96 andalso H < 123 ->
-                io:format("H2 ==  ~p~n", [H]),
-                Acc2 = [97|Acc],
-                io:format("Acc2 ==  ~p~n", [Acc2]), Acc2;
+                [97|Acc];
            true -> 
-                io:format("H3 ==  ~p~n", [H]),
-                io:format("Acc3 ==  ~p~n", [Acc]),
                 Acc
         end,
     input (Tail, Asd).
-%%% create_word(Out, [], 0, KA, [])
+
 %% the creation of the output encoded text
 create_word([], _Acc, _, _KA, Dec) -> 
     Out = lists:reverse(Dec),
@@ -80,13 +74,9 @@ create_proplist([H1|TKey], Key, Alphabet, Res, List1, Count) ->
 %%    Out_sent;
 decoder([{N,Head}|Tail_KA], Word) ->
     if N == Word ->
-            io:format("Head: ~p~n",[Head]),
             Head;
 %%%decoder([{_}|Tail_KA], Word) ->
 %%%    io:format("lets go ~n",[]),
        true ->
             decoder(Tail_KA, Word)
-    end;
-decoder(A,B) ->
-    io:format("gotyou! ~p, ~p~n", [A,B]).
-
+    end.
